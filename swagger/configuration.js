@@ -131,7 +131,7 @@
  *     in: path
  *     description: Id of the todo
  *     required: true
- *     type: integer
+ *     type: string
  *   responses:
  *     '200':
  *      description: A successful response
@@ -155,7 +155,7 @@
  *     in: path
  *     description: Id of the todo
  *     required: true
- *     type: integer
+ *     type: string
  *   - name: todo data to update
  *     in: body
  *     description: todo of the user
@@ -192,7 +192,7 @@
  *     in: path
  *     description: Id of the todo
  *     required: true
- *     type: integer
+ *     type: string
  *   responses:
  *    '200':
  *     description: A successful response
