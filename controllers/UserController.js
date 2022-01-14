@@ -1,5 +1,4 @@
-const UserModel = require("../models/Users");
-const fetch = require("node-fetch");
+const UserModel = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -102,15 +101,14 @@ exports.loginUser = async (req, res) => {
 
         user.token = token;
 
-        let thisUser = {
+
+        return res.status(200).json({
             token: user.token,
             id: user._id,
-        }
-
-        return res.status(200).send({
-            thisUser, 
-            status: 200
-        });
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName
+        })
 
     } catch (error) {
             

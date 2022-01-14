@@ -10,4 +10,4 @@ let TodosModelSchema = new Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}
 });
 
-module.exports = mongoose.model('SiteModel', SiteModelSchema );
+module.exports = mongoose.model('SiteModel', TodosModelSchema );

@@ -4,6 +4,7 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const router = require('./routes/routes');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,5 +16,7 @@ var db = mongoose.connection;
 !db ? console.log("Error connecting db") : console.log("Db connected successfully")
 
 app.get('/', (req, res) => res.send('Hello World!'));
+
+app.use('/api', router);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
