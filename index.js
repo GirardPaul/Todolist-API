@@ -21,7 +21,7 @@ const swaggerOptions = {
                 name: "Girard Paul",
                 email: "paul.girard1@viacesi.fr"
             },
-            servers: ["http://localhost:3000"]
+            servers: ["http://localhost:5000"]
         }
     },
     apis: ["./swagger/configuration.js"]
