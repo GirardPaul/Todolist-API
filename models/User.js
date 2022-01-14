@@ -9,7 +9,7 @@ let UserModelSchema = new Schema({
     password: { type: String },
     role: { type: String, default: "ROLE_USER" },
     token: { type: String },
-    created_at: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('UserModel', UserModelSchema);
