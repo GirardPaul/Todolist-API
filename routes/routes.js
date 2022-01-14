@@ -11,6 +11,13 @@ router.route('/login')
     .post(UserController.loginUser);
 
 router.route('/todos')
-    .post(authentification.verifyToken, todos.attachUserToTodo, TodoController.create);
+    .post(authentification.verifyToken, todos.attachUserToTodo, TodoController.create)
+    .get(authentification.verifyToken, todos.findTodoCurrentUser, TodoController.findAll);
+
+
+router.route('/todos/:id')
+.get(authentification.verifyToken, todos.checkTodoForUser, TodoController.findOne)
+.put(authentification.verifyToken, todos.checkTodoForUser, TodoController.update)
+.delete(authentification.verifyToken, todos.checkTodoForUser, TodoController.delete)
 
 module.exports = router;
