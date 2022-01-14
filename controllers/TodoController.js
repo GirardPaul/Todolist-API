@@ -1,36 +1,33 @@
 const TodoModel = require("../models/Todos");
+const { responseData } = require("../middleware/response");
 
 exports.create = async (req, res) => {
   try {
     const todo = await TodoModel.create(req.body);
-
-    return res.status(200).json(todo);
+    responseData(res, 200, "Todo created successfully", todo);
   } catch (error) {
-    return res.status(400).json({
-      message: "Une erreur est survenue.",
-      statusCode: 400,
-    });
+    responseError(res, 400, error.message);
   }
 };
 
 exports.findAll = async (req, res) => {
   const userId = req.params.userId;
   const todosUser = await TodoModel.find({ user: userId });
-  return res.status(200).json(todosUser);
+  if (!todosUser || todosUser.length === 0) {
+    responseError(res, 404, "Aucun todo trouvé.");
+  }
+  responseData(res, 200, "Todo retreived successfully", todosUser);
 };
 
 exports.findOne = async (req, res) => {
   const todosUser = await TodoModel.find({ _id: req.params.id });
-  return res.status(200).json(todosUser);
+  responseData(res, 200, "Todo retreived successfully", todosUser);
 };
 
 exports.update = async (req, res) => {
   await TodoModel.findById(req.params.id, (err, todo) => {
     if (err) {
-      return res.status(404).json({
-        success: false,
-        message: err,
-      });
+      responseError(res, 404, err);
     }
 
     todo.task = req.body.task ? req.body.task : todo.task;
@@ -39,30 +36,19 @@ exports.update = async (req, res) => {
 
     todo.save((err) => {
       if (err) {
-        return res.status(400).json({
-          success: false,
-          message: err,
-        });
+        responseError(res, 400, err);
       }
 
-      return res.status(200).json({
-        message: "Todo updated successfully",
-        todo,
-      });
+      responseData(res, 200, "Todo updated successfully", todo);
     });
   });
 };
 
 exports.delete = async (req, res) => {
-    TodoModel.remove({_id: req.params.id}, (err) => {
-        if (err) {
-            return res.status(400).json({
-                success: false,
-                message: err,
-            });
-        }
-        return res.status(200).json({
-            message: "Todo deleted successfully",
-        });
-    });
+  TodoModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      responseError(res, 400, err);
+    }
+    responseData(res, 204, "Todo deleted successfully", { _id: req.params.id });
+  });
 };
