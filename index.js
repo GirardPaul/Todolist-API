@@ -29,7 +29,7 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-mongoose.connect('mongodb+srv://root:root@todolist.jzo3b.mongodb.net/todolist?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true,  autoIndex: true});
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@todolist.jzo3b.mongodb.net/todolist?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true,  autoIndex: true});
 
 var db = mongoose.connection;
 
