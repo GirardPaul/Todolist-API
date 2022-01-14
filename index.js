@@ -5,9 +5,30 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const router = require('./routes/routes');
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 
 app.use(cors());
 app.use(bodyParser.json());
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: "Todos API",
+            description: "An api to create todo request based on database mongodb",
+            version: "1.0.0",
+            contact: {
+                name: "Girard Paul",
+                email: "paul.girard1@viacesi.fr"
+            },
+            servers: ["http://localhost:3000"]
+        }
+    },
+    apis: ["./swagger/configuration.js"]
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 mongoose.connect('mongodb://localhost:27017/todolist', { useNewUrlParser: true, useUnifiedTopology: true,  autoIndex: true});
 
